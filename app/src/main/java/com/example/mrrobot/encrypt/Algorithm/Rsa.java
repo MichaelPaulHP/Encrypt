@@ -1,5 +1,7 @@
 package com.example.mrrobot.encrypt.Algorithm;
 
+import android.widget.Toast;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -40,42 +42,30 @@ public class Rsa {
         try {
             Cipher cipher= Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);// go to ENCRYPT_MODE
-            result=Base64.encodeBase64String(cipher.doFinal(x.getBytes()));//x ENCRYPTED to String
+            result = android.util.Base64.encodeToString(cipher.doFinal(x.getBytes()),0);
+            //result=Base64.encodeBase64String(cipher.doFinal(x.getBytes()),getEncode());//x ENCRYPTED to String
 
-        } catch (InvalidKeyException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+
         return result;
 
     }
     public String decrypt(String x){
         String result="null";
+
         try {
             Cipher cipher= Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, this.privateKey);// go to DECRYPT_MODE
-            result=new String(cipher.doFinal(Base64.decodeBase64(x)));//x to bytes and DECRYPTED
 
-        } catch (InvalidKeyException e) {
+            result=new String(cipher.doFinal(android.util.Base64.decode(x,0)));
+            //result=new String(cipher.doFinal(Base64.decodeBase64(x)));//x to bytes and DECRYPTED
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+
         return result;
 
     }

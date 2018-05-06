@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FileFragment">
+
+    <RelativeLayout
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/fileInputButton"
+            style="@android:style/Widget.Material.Button"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/radioGroup"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:text="Abrir Archivo"
+            android:textColor="@color/colorPrimaryDark" />
+        <RadioGroup
+            android:layout_margin="30dp"
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_above="@+id/buttonGo"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioEncrypt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:text="Encriptar"
+                android:textColor="@color/colorPrimary">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioDecrypt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Desencriptar"
+
+                android:textColor="@color/colorPrimary">
+
+            </RadioButton>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonGo"
+            style="@android:style/Widget.Material.Button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
+            android:text="Iniciar"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

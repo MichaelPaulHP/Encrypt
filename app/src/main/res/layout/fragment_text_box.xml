@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    tools:context=".TextBoxFragment"
+    android:background="@color/colorPrimaryDark">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <!--TEXT BOX -->
+        <LinearLayout
+            android:id="@+id/textContent"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/layoutOptions"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:fontFamily="@font/droid_sans_mono"
+                android:gravity="top|left"
+                android:hint="Primero, ingrese Texto"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:paddingLeft="20dp"
+                android:paddingRight="40dp"
+                android:textAlignment="gravity"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutOptions"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/options"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                app:itemIconTint="@color/colorPrimary"
+                app:itemTextColor="@color/colorPrimaryDark"
+                app:menu="@menu/navigation_vertical" />
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+
+</FrameLayout>

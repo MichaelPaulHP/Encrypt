@@ -1,0 +1,178 @@
+package com.example.mrrobot.encrypt;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+//import android.text.ClipboardManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Locale;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
+
+
+public class TextBoxFragment extends Fragment implements
+        BottomNavigationView.OnNavigationItemSelectedListener
+        , TextToSpeech.OnInitListener
+{
+
+    private EditText editText;
+    private BottomNavigationView options;
+    private TextToSpeech textToSpeech;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    //private static final String text = "";
+
+
+    // TODO: Rename and change types of parameters
+    private String text;
+
+
+    private OnFragmentInteractionListener mListener;
+
+    public TextBoxFragment() {
+        // Required empty public constructor
+
+    }
+
+
+    // TODO: Rename and change types and number of parameters
+    /*public static TextBoxFragment newInstance(String param1, String param2) {
+        TextBoxFragment fragment = new TextBoxFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }*/
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.textToSpeech = new TextToSpeech(getContext(),this );
+        if (getArguments() != null) {
+            text = getArguments().getString("text");
+        }
+        else{
+            text="";
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_text_box, container, false);
+        this.editText = (EditText) view.findViewById(R.id.editText);
+        this.editText.setText(text);
+        this.options = (BottomNavigationView)view.findViewById(R.id.options);
+        this.options.setOnNavigationItemSelectedListener(this);
+        return view;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    /*public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }*/
+    public String getText(){
+        return this.editText.getText().toString();
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        /*if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }*/
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (this.textToSpeech != null) {
+            this.textToSpeech.stop();
+            this.textToSpeech.shutdown();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+                case R.id.listen:
+                    // listen text
+                    listen(getText());
+                    return true;
+                case R.id.clear:
+                    // clear text of editText
+                    this.editText.setText("");
+                    return true;
+                case R.id.copy:
+                    toClipBoar(getText());
+                    return true;
+            }
+            return false;
+    }
+
+    private void toClipBoar(String x ){
+
+        if(!x.isEmpty()){
+            ClipData clipData = ClipData.newPlainText("Text",x);
+            ClipboardManager clipboardManager= (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
+            clipboardManager.setPrimaryClip(clipData);
+
+        }
+    }
+
+    @Override
+    public void onInit(int status) {
+        try{
+            if (status == TextToSpeech.SUCCESS) {
+                int result = this.textToSpeech.setLanguage(Locale.US);
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    throw new Exception("no support language");
+                }
+            } else {
+                throw new Exception("Initilization Failed!");
+            }
+        }catch (Exception e){
+            Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG);
+        }
+
+    }
+    public void listen (String x){
+        if(this.textToSpeech.isSpeaking()){
+            this.textToSpeech.stop();
+        }
+        else {
+            this.textToSpeech.speak(x, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        //void onFragmentInteraction(Uri uri);
+        void onSetText(String text);
+        //void getText();
+    }
+}

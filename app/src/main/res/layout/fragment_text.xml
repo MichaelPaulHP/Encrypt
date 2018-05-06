@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:isScrollContainer="false"
+    android:scrollbarAlwaysDrawVerticalTrack="false"
+    tools:context=".TextFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="MR. BOT ENCRYPT"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/inputFrameTextBox"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+
+
+                android:layout_below="@+id/topBar"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/fragment_text_box"
+                    android:name="com.example.mrrobot.encrypt.TextBoxFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    >
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/inputFrameTextBox"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioEncrypt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="Encriptar"
+                    android:textColor="@color/colorPrimary">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/radioDecrypt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Desencriptar"
+
+                    android:textColor="@color/colorPrimary">
+
+                </RadioButton>
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/buttonGo"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+
+
+                android:layout_below="@+id/radioGroup"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
+                android:text="Iniciar"
+                android:layout_marginBottom="30dp"/>
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resultado:"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/buttonGo"
+                android:layout_marginLeft="30dp"
+                />
+            <FrameLayout
+                android:id="@+id/outputFragment_text_box"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/resultTextView"
+                >
+
+            </FrameLayout>
+            <!--
+            <fragment
+
+                android:layout_below="@+id/buttonGo"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/outputFragment_text_box"
+                android:name="com.example.mrrobot.encrypt.TextBoxFragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:layout="@layout/fragment_text_box">
+
+            </fragment>
+            -->
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</FrameLayout>
