@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.mrrobot.encrypt.Algorithm.MrBot;
 import com.example.mrrobot.encrypt.Algorithm.Rsa;
 
 
@@ -23,7 +25,7 @@ public class TextFragment extends Fragment implements
     // attributes
     private boolean encrypt;
     private String text;
-    private Rsa rsa;
+    private MrBot mrBot;
     TextBoxFragment inputFragmentTexbox;
 
 
@@ -37,14 +39,14 @@ public class TextFragment extends Fragment implements
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.encrypt=true;
-        this.rsa = new Rsa();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        this.mrBot= new MrBot();
         View view= inflater.inflate(R.layout.fragment_text, container, false);
         // get RadioGroup
         RadioGroup radioGroup= (RadioGroup)view.findViewById(R.id.radioGroup);
@@ -69,15 +71,8 @@ public class TextFragment extends Fragment implements
 
     public String encryptOrDecrypt(String text){
         String result="";
-        if(this.encrypt){
-            //encrypt text
-            result=this.rsa.encrypt(text);
 
-        }
-        else{
-            //decrypt text
-            result=this.rsa.decrypt(text);
-        }
+        result=this.encrypt? this.mrBot.encrypt(text):this.mrBot.decrypt(text);
         return result;
     }
     public void go(){
@@ -115,6 +110,7 @@ public class TextFragment extends Fragment implements
         switch (id){
             case R.id.buttonGo:
                 go();
+                return;
         }
     }
 

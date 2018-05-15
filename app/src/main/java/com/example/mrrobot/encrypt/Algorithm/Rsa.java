@@ -21,32 +21,33 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Rsa {
 
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
-
+    private PrivateKey privateKey;// private key
+    private PublicKey publicKey;// public key
+    //private Cipher cipher;
 
     public Rsa() {
         KeyPair keyPair= null;
         try {
-            keyPair = generateKeys();
+
+            keyPair = new KeyPairGenerate().newInstance();
             this.privateKey=keyPair.getPrivate();
             this.publicKey=keyPair.getPublic();
+            //cipher= Cipher.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-
     }
     public String encrypt(String x){
         String result="null";
         try {
             Cipher cipher= Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);// go to ENCRYPT_MODE
-            result = android.util.Base64.encodeToString(cipher.doFinal(x.getBytes()),0);
+            byte[] xInBytes =cipher.doFinal(x.getBytes());
+            result = android.util.Base64.encodeToString(xInBytes,0);
             //result=Base64.encodeBase64String(cipher.doFinal(x.getBytes()),getEncode());//x ENCRYPTED to String
 
         } catch (Exception e) {
-            e.printStackTrace();
+            result= e.getMessage();
         }
 
         return result;
@@ -63,17 +64,12 @@ public class Rsa {
             //result=new String(cipher.doFinal(Base64.decodeBase64(x)));//x to bytes and DECRYPTED
 
         } catch (Exception e) {
-            e.printStackTrace();
+            result= e.getMessage();
         }
 
         return result;
 
     }
-    private KeyPair generateKeys() throws NoSuchAlgorithmException {
-        final int keySize = 512;
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(keySize);
-        return keyPairGenerator.genKeyPair();
-    }
+
 
 }

@@ -29,39 +29,57 @@
                 android:background="@color/colorPrimaryDark"
                 android:fontFamily="@font/droid_sans_mono"
                 android:gravity="top|left"
-                android:hint="Primero, ingrese Texto"
+                android:hint="Pulsa aqui para insertar texto"
                 android:inputType="textMultiLine"
+                android:isScrollContainer="true"
                 android:lines="8"
                 android:paddingLeft="20dp"
                 android:paddingRight="40dp"
                 android:textAlignment="gravity"
                 android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="#BBB"
+                android:textColorLink="@color/colorPrimary"
                 android:textSize="12sp" />
 
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/layoutOptions"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
-
             android:background="@color/colorPrimaryDark"
-            android:orientation="vertical"
-            android:gravity="right">
+            >
+
+            <ImageButton
+                android:id="@+id/talk"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="40dp"
+                android:adjustViewBounds="false"
+                android:background="@android:color/transparent"
+                android:contentDescription="hablar "
+                android:fitsSystemWindows="false"
+                android:src="@drawable/ic_record_voice_over_black_24dp"
+                android:visibility="visible" />
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/options"
+
                 android:layout_width="200dp"
                 android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="40dp"
                 app:itemIconTint="@color/colorPrimary"
                 app:itemTextColor="@color/colorPrimaryDark"
                 app:menu="@menu/navigation_vertical" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
 

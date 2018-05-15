@@ -4,8 +4,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 //import android.text.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 
@@ -78,6 +83,14 @@ public class TextBoxFragment extends Fragment implements
         this.editText.setText(text);
         this.options = (BottomNavigationView)view.findViewById(R.id.options);
         this.options.setOnNavigationItemSelectedListener(this);
+        // button to talk
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.talk);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                talk();
+            }
+        });
         return view;
     }
 
@@ -133,6 +146,26 @@ public class TextBoxFragment extends Fragment implements
             }
             return false;
     }
+    private void talk(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+
+        startActivityForResult(intent, 5);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case 5:
+                if(resultCode == RESULT_OK && data != null){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                    this.editText.setText(result.get(0));
+                }
+        }
+    }
 
     private void toClipBoar(String x ){
 
@@ -148,7 +181,7 @@ public class TextBoxFragment extends Fragment implements
     public void onInit(int status) {
         try{
             if (status == TextToSpeech.SUCCESS) {
-                int result = this.textToSpeech.setLanguage(Locale.US);
+                int result = this.textToSpeech.setLanguage(Locale.getDefault());
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     throw new Exception("no support language");
                 }
@@ -163,6 +196,7 @@ public class TextBoxFragment extends Fragment implements
     public void listen (String x){
         if(this.textToSpeech.isSpeaking()){
             this.textToSpeech.stop();
+
         }
         else {
             this.textToSpeech.speak(x, TextToSpeech.QUEUE_FLUSH, null, null);
