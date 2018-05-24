@@ -13,6 +13,7 @@ import android.view.ViewGroup;
  */
 public class InfoFragment extends Fragment {
 
+    private io.socket.client.Socket socket;
 
     public InfoFragment() {
         // Required empty public constructor

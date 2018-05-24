@@ -84,13 +84,14 @@ public class TextBoxFragment extends Fragment implements
         this.options = (BottomNavigationView)view.findViewById(R.id.options);
         this.options.setOnNavigationItemSelectedListener(this);
         // button to talk
-        ImageButton imageButton= (ImageButton)view.findViewById(R.id.talk);
+        /*ImageButton imageButton= (ImageButton)view.findViewById(R.id.talk);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 talk();
             }
         });
+        */
         return view;
     }
 
@@ -103,6 +104,7 @@ public class TextBoxFragment extends Fragment implements
     public String getText(){
         return this.editText.getText().toString();
     }
+    public void setText(String text){this.editText.setText(text);}
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -136,16 +138,22 @@ public class TextBoxFragment extends Fragment implements
                     // listen text
                     listen(getText());
                     return true;
-                case R.id.clear:
+                case R.id.talk:
+                    talk();
+                    return true;
+
+            }
+            return false;
+    }
+    /*
+    case R.id.clear:
                     // clear text of editText
                     this.editText.setText("");
                     return true;
                 case R.id.copy:
                     toClipBoar(getText());
                     return true;
-            }
-            return false;
-    }
+    */
     private void talk(){
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);

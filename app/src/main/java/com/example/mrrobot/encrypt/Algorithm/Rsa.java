@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -21,27 +22,53 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Rsa {
 
-    private PrivateKey privateKey;// private key
-    private PublicKey publicKey;// public key
+    protected PrivateKey privateKey;// private key
+    protected PublicKey publicKey;// public key
     //private Cipher cipher;
 
     public Rsa() {
         KeyPair keyPair= null;
         try {
-
             keyPair = new KeyPairGenerate().newInstance();
             this.privateKey=keyPair.getPrivate();
             this.publicKey=keyPair.getPublic();
+
             //cipher= Cipher.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
+    public String getPublicKey(){
+        byte[] bytes= this.publicKey.getEncoded();
+        String key = android.util.Base64.encodeToString(bytes,0);
+        return key;
+    }
+    public void setPublicKey(PublicKey publicKey){
+        this.publicKey=publicKey;
+    }
     public String encrypt(String x){
         String result="null";
         try {
             Cipher cipher= Cipher.getInstance("RSA");
+
             cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);// go to ENCRYPT_MODE
+            byte[] xInBytes =cipher.doFinal(x.getBytes());
+            result = android.util.Base64.encodeToString(xInBytes,0);
+            //result=Base64.encodeBase64String(cipher.doFinal(x.getBytes()),getEncode());//x ENCRYPTED to String
+
+        } catch (Exception e) {
+            result= e.getMessage();
+        }
+
+        return result;
+
+    }
+    public String encrypt(String x ,PublicKey publicKey){
+        String result="null";
+        try {
+            Cipher cipher= Cipher.getInstance("RSA");
+
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);// go to ENCRYPT_MODE
             byte[] xInBytes =cipher.doFinal(x.getBytes());
             result = android.util.Base64.encodeToString(xInBytes,0);
             //result=Base64.encodeBase64String(cipher.doFinal(x.getBytes()),getEncode());//x ENCRYPTED to String

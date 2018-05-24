@@ -8,135 +8,234 @@
     android:scrollbarAlwaysDrawVerticalTrack="false"
     tools:context=".TextFragment">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/topBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="5dp"
+            android:orientation="horizontal"
+            >
 
-            <RelativeLayout
-                android:id="@+id/topBar"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="120dp"
-                android:paddingHorizontal="40dp">
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cantUserTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Conectando ..." />
+
+                <TextView
+                    android:id="@+id/cantFriendsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:gravity="center"
+                    android:text="Amigos Conectados: 0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="110dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:text="MR. BOT ENCRYPT"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:text="Publica: " />
 
+                <ImageButton
+                    android:id="@+id/showKeyPublic"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="false"
+                    android:background="@android:color/transparent"
+                    android:fitsSystemWindows="false"
+                    android:src="@drawable/ic_vpn_key_white_24dp"
+                    android:visibility="visible" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privada: " />
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/inputFrameTextBox"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@+id/topBar"
-                android:layout_centerHorizontal="true"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/fragment_text_box"
-                    android:name="com.example.mrrobot.encrypt.TextBoxFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:addStatesFromChildren="true">
-
-                </FrameLayout>
-
+                <ImageButton
+                    android:id="@+id/showKeyPrivate"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="false"
+                    android:background="@android:color/transparent"
+                    android:fitsSystemWindows="false"
+                    android:src="@drawable/ic_vpn_key_white_24dp"
+                    android:visibility="visible" />
 
             </LinearLayout>
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_below="@+id/inputFrameTextBox"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/radioEncrypt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-
-                    android:buttonTint="@color/colorPrimary"
-                    android:checked="true"
-                    android:text="Encriptar"
-                    android:textColor="@color/colorPrimary">
-
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/radioDecrypt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorPrimary"
-                    android:text="Desencriptar"
-
-                    android:textColor="@color/colorPrimary">
-
-                </RadioButton>
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/buttonGo"
-                style="@android:style/Widget.Material.Button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+        </RelativeLayout>
+        <!--FIN TITLE-->
 
 
-                android:layout_below="@+id/radioGroup"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
-                android:background="@color/colorPrimary"
-                android:text="Iniciar"
-                android:textColor="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/topBar"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Mensages:"
+             />
 
-            <TextView
-                android:id="@+id/resultTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonGo"
-                android:layout_marginLeft="30dp"
-                android:text="Resultado:"
-                android:textColor="@color/colorPrimary" />
+        <ImageButton
+            android:id="@+id/decrypt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/outputFragment_text_box"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="false"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="false"
+            android:src="@drawable/ic_lock_open_white_24dp"
+            android:visibility="visible" />
+
+
+
+        <!--OUTPUT TEXT-->
+
+        <FrameLayout
+            android:id="@+id/outputFragment_text_box"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_below="@+id/resultTextView"
+            android:layout_centerHorizontal="true">
+
+        </FrameLayout>
+        <!--OUTPUT  TEXT FIN -->
+
+        <!--INPUT TEXT-->
+        <LinearLayout
+            android:id="@+id/inputFrameTextBox"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_above="@+id/buttonGo"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/outputFragment_text_box"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@+id/resultTextView"
-                android:layout_centerHorizontal="true">
-
-            </FrameLayout>
-            <!--
-            <fragment
-
-                android:layout_below="@+id/buttonGo"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/outputFragment_text_box"
+                android:id="@+id/fragment_text_box"
                 android:name="com.example.mrrobot.encrypt.TextBoxFragment"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                tools:layout="@layout/fragment_text_box">
+                android:layout_height="match_parent"
+                android:addStatesFromChildren="true">
 
-            </fragment>
-            -->
-        </RelativeLayout>
+            </FrameLayout>
 
 
-    </ScrollView>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/showKeyReceptor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/resultTextView"
+            android:adjustViewBounds="false"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="false"
+            android:src="@drawable/ic_vpn_key_white_24dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/receptorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/inputFrameTextBox"
+            android:layout_toStartOf="@+id/buttonGo"
+            android:gravity="center"
+            android:text=""
+            android:layout_marginRight="15dp"
+            />
+
+        <Button
+            android:id="@+id/buttonGo"
+            style="@android:style/Widget.Material.Button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/colorPrimary"
+            android:text="Enviar"
+            android:textColor="#222" />
+        <!--FIN INPUT TEXT-->
+        <!--
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@+id/inputFrameTextBox"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioEncrypt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:text="Encriptar"
+                android:textColor="@color/colorPrimary">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioDecrypt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Desencriptar"
+
+                android:textColor="@color/colorPrimary">
+
+            </RadioButton>
+        </RadioGroup>
+        -->
+
+
+        <!--
+        <fragment
+
+            android:layout_below="@+id/buttonGo"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/outputFragment_text_box"
+            android:name="com.example.mrrobot.encrypt.TextBoxFragment"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            tools:layout="@layout/fragment_text_box">
+
+        </fragment>
+        -->
+    </RelativeLayout>
 
 
 </FrameLayout>

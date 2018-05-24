@@ -7,25 +7,48 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
+
     <FrameLayout
         android:id="@+id/ContentFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/navigation"
-        >
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/barTitle">
 
     </FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <RelativeLayout
+        android:id="@+id/barTitle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#111"
+        android:paddingHorizontal="20dp">
 
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimaryDark"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
-        app:menu="@menu/navigation" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="M r .  B o t"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="#111"
+            app:itemIconTint="@color/colorPrimary"
+            app:itemTextColor="@color/colorPrimary"
+            app:menu="@menu/navigation" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>
