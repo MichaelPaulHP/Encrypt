@@ -75,15 +75,36 @@ public class TextFragment extends Fragment implements
         this.socket= SocketIO.getSocket();
         this.amigos = new HashMap<String, String>();
         this.socket.connect();
+        this.mrBot= new MrBot();
+        this.socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject thisUser = new JSONObject();
+                        try{
+                            socketId=socket.id();
+                            // var data={"id":$socket.id,"publicKey":$myKeyPublic}
+                            thisUser.put("id",socket.id());
+                            thisUser.put("publicKey",mrBot.getPublicKey());
+                            socket.emit("infoNewUser",thisUser);
+                        }catch(JSONException e){
+                            Log.d("JSONException",e.getMessage());
+                        }
 
-
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.mrBot= new MrBot();
+
+
         View view= inflater.inflate(R.layout.fragment_text, container, false);
         // get RadioGroup
         /*RadioGroup radioGroup= (RadioGroup)view.findViewById(R.id.radioGroup);
@@ -117,30 +138,15 @@ public class TextFragment extends Fragment implements
         /*inputFragmentTexbox =(TextBoxFragment) getFragmentManager().findFragmentById(R.id.fragment_text_box);
         this.text=inputFragmentTexbox.getText();*/
 
-        this.socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject thisUser = new JSONObject();
-                        try{
-                            socketId=socket.id();
-                            // var data={"id":$socket.id,"publicKey":$myKeyPublic}
-                            thisUser.put("id",socket.id());
-                            thisUser.put("publicKey",mrBot.getPublicKey());
-                            socket.emit("infoNewUser",thisUser);
-                        }catch(JSONException e){
-                            Log.d("JSONException",e.getMessage());
-                        }
-                        textView.setText("Tus mensajes "+socket.id()+": ");
-                    }
-                });
-            }
-        });
+
+
         // emit this
 
         // cantidad ed user
+        if(this.socket.connected()){
+            this.cantUserTextView.setText(this.socket.id());
+
+        }
 
         // return cant of user conectados
         this.socket.on("newUser", new Emitter.Listener() {
@@ -150,7 +156,7 @@ public class TextFragment extends Fragment implements
                     @Override
                     public void run() {
                         String cant = args[0].toString();
-                        cantUserTextView.setText("Conectados: "+cant);
+                        cantUserTextView.setText(socket.id());
                     }
                 });
             }

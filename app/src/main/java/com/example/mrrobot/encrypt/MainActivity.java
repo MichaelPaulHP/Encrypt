@@ -26,6 +26,7 @@ import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -41,25 +42,25 @@ public class MainActivity extends AppCompatActivity {
     /*
     public static  void main(String[] args) throws NoSuchAlgorithmException,
             NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
-        String x="hola Mundo";
+        String x="HOLA MUNDO";
         final int keySize = 512;
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(keySize);
         KeyPair keyPair =  keyPairGenerator.genKeyPair();
         PublicKey publicKey = keyPair.getPublic();
-        //PrivateKey privateKey = keyPair.getPrivate();
+        PrivateKey privateKey = keyPair.getPrivate();
 
         System.out.println("PUBLIC KEY");
         System.out.println(publicKey.getAlgorithm());
         System.out.println(publicKey.getFormat());
         byte[] encoded = publicKey.getEncoded();
         System.out.println(Base64.encodeBase64String(encoded));
-
+        System.out.println(Arrays.toString(encoded));
         String enviar =Base64.encodeBase64String(encoded);// este viaja como string
         // probando key
 
         // ahora este recie para encryptar
-
+        /*
         byte[] bytes =Base64.decodeBase64(enviar);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         KeySpec keySpec = new X509EncodedKeySpec(bytes);
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(Base64.encodeBase64String(encodedw));
 
 
-
         // encriptar con las clave
         Cipher cipher= Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);// go to ENCRYPT_MODE
@@ -80,6 +80,17 @@ public class MainActivity extends AppCompatActivity {
         String result= Base64.encodeBase64String(cipher.doFinal(x.getBytes()));//x ENCRYPTED to String
         System.out.println("---------");
         System.out.println(result);
+        System.out.println(Arrays.toString(xInBytes));
+
+        byte[] en = Base64.decodeBase64(result);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);// go to ENCRYPT_MODE
+        byte[] www =cipher.doFinal(en);
+        //String result = android.util.Base64.encodeToString(xInBytes,0);
+        String ddd= Base64.encodeBase64String(www);//x ENCRYPTED to String
+        System.out.println("---------");
+        System.out.println(new String (cipher.doFinal(en)));
+        System.out.println(ddd);
+        System.out.println(Arrays.toString(www));
 
         Cipher cipherb= Cipher.getInstance("RSA");
         cipherb.init(Cipher.ENCRYPT_MODE, keyFromBytes);// go to ENCRYPT_MODE
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         keyPairGenerator2.initialize(keySize);
         KeyPair keyPair2 =  keyPairGenerator.genKeyPair();
         PrivateKey privateKey = keyPair.getPrivate();
-        PublicKey publi = keyPair.getPublic()
+        PublicKey publi = keyPair.getPublic();
         Cipher cipher2 = Cipher.getInstance("RSA");
         cipher2.init(Cipher.DECRYPT_MODE, privateKey);// go to ENCRYPT_MODE
         //byte[] xInBytes2 =cipher.doFinal(x.getBytes());
@@ -106,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
        // PublicKey pk = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec());
     }
     */
+
 
     private TextView mTextMessage;
     private FragmentTransaction fragmentTransaction;
@@ -136,13 +148,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //setFragment(textFragment);
+                    setFragment(textFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    //setFragment(fileFragment);
+                    setFragment(fileFragment);
                     return true;
                 case R.id.navigation_notifications:
-                    //setFragment(infoFragment);
+                    setFragment(infoFragment);
                     return true;
             }
             return false;
@@ -153,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     private  void setFragment (Fragment fragment){
 
         this.fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //this.fragmentTransaction.addToBackStack(null);
+        this.fragmentTransaction.addToBackStack(null);
         this.fragmentTransaction.replace(R.id.ContentFragment,fragment);
         this.fragmentTransaction.commit();
     }
